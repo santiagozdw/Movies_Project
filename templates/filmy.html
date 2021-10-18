@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Filmy{% endblock %}
+
+{% block content %}
+
+<div class="row">
+   <div class="col-lg-12 text-center">
+       <h1 class="mt-5">Witaj w mojej bibliotece filmów</h1>
+       <p class="lead">Znajdziesz tutaj tylko najlepsze tytuły!</p>
+   </div>
+  <div class="row">
+  
+      <div class="col-6 mb-4">
+      {% for movie_list in movie_lists%}
+          <a href="{{ url_for('homepage', selected_list=movie_list) }}" class="btn {% if movie_list == current_list %} btn-info {%else%} btn-outline-info {% endif%}">{{movie_list.replace('_', ' ').title()}}</a>
+      {% endfor%}
+      </div>
+  
+  </div>
+  {% for movie in movies %}
+   <div class="col-lg-3 col-md-6 mb-4">
+       <div class="card h-100">
+           <img class="card-img-top" src="{{tmdb_image_url(movie.poster_url, "w342")}}" alt="">
+           <div class="card-body">
+               <h4 class="card-title">{{movie.title}}</h4>
+           </div>
+           <div class="card-footer text-center">
+               <a href="{{ url_for('film', movie_id=movie.movie_id) }}" class="btn btn-primary">Pokaż więcej</a>
+           </div>
+       </div>
+   </div>
+   {% endfor %}
+</div>
+
+{% endblock %}
